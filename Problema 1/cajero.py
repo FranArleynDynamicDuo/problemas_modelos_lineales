@@ -12,7 +12,7 @@ class Cajero:
             if cajero.disponible:
                 return True
         return False
-    
+
     @staticmethod
     def todos_cajeros_disponibles(lista):
         for cajero in lista:
@@ -29,7 +29,9 @@ class Cajero:
         return lista
 
     def __str__(self):
-        return "Tiempo Servicio %0.6f - Disponible %b" % (self.tiempo_servicio,self.disponible)
+        return "Tiempo Servicio %0.6f - Disponible %b" % (
+            self.tiempo_servicio, self.disponible)
 
     def __unicode__(self):
-        return "Tiempo Servicio %0.6f - Disponible %b" % (self.tiempo_servicio,self.disponible)
+        return "Tiempo Servicio %0.6f - Disponible %b" % (
+            self.tiempo_servicio, self.disponible)

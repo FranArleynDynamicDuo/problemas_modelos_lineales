@@ -5,6 +5,7 @@ Created on Feb 8, 2017
 '''
 
 class Cola:
+
     def __init__(self):
         self.items = []
 

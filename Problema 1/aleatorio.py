@@ -1,6 +1,8 @@
-import random
 import numpy
+import random
+
 from cajero import Cajero
+
 
 CLIENTS_PER_HOUR = 60
 UNIFORM_LOW = 3
@@ -20,7 +22,8 @@ def random_cola():
 def random_service_time():
     return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)
 
-def random_decline(cola_por_atender,cola_por_llegar,personas_que_declinaron):
+
+def random_decline(cola_por_atender, cola_por_llegar, personas_que_declinaron):
     resp = random.random()
 
     if 6 <= cola_por_atender.tamano(
@@ -29,7 +32,7 @@ def random_decline(cola_por_atender,cola_por_llegar,personas_que_declinaron):
             cola_por_atender.encolar(
                 cola_por_llegar.desencolar())
         else:
-            personas_que_declinaron +=1
+            personas_que_declinaron += 1
             cola_por_llegar.desencolar()
 
     elif 9 <= cola_por_atender.tamano() and cola_por_atender.tamano() <= 10:
@@ -37,7 +40,7 @@ def random_decline(cola_por_atender,cola_por_llegar,personas_que_declinaron):
             cola_por_atender.encolar(
                 cola_por_llegar.desencolar())
         else:
-            personas_que_declinaron +=1
+            personas_que_declinaron += 1
             cola_por_llegar.desencolar()
 
     elif 11 <= cola_por_atender.tamano() and cola_por_atender.tamano() <= 14:
@@ -45,7 +48,7 @@ def random_decline(cola_por_atender,cola_por_llegar,personas_que_declinaron):
             cola_por_atender.encolar(
                 cola_por_llegar.desencolar())
         else:
-            personas_que_declinaron +=1
+            personas_que_declinaron += 1
             cola_por_llegar.desencolar()
 
     elif 15 >= cola_por_atender.tamano():
@@ -53,8 +56,9 @@ def random_decline(cola_por_atender,cola_por_llegar,personas_que_declinaron):
             cola_por_atender.encolar(
                 cola_por_llegar.desencolar())
         else:
-            personas_que_declinaron +=1
+            personas_que_declinaron += 1
             cola_por_llegar.desencolar()
+
 
 def proximo_evento(proxima_llegada, cajeros):
     servidores_validos = Cajero.tiempo_servicio_valido(

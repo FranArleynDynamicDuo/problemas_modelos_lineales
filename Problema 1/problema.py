@@ -1,10 +1,10 @@
 from __future__ import division
-import random
-from cajero import Cajero
-from persona import Persona
-from cola import Cola
-from problema1_aleatorio import random_arrival_time, proximo_evento,\
+
+from aleatorio import random_arrival_time, proximo_evento,\
     random_service_time, random_decline
+from cajero import Cajero
+from cola import Cola
+from persona import Persona
 
 
 LLEGADA = 'llegada'
@@ -72,8 +72,10 @@ while (cola_por_llegar.tamano() > 0 or not Cajero.todos_cajeros_disponibles(
                 # Encontramos el proximo servidor disponible
                 for i in range(maximo_servidores):
                     if lista_cajeros[i].disponible:
-                        lista_cajeros[i].tiempo_servicio = random_service_time()
-                        lista_cajeros[i].persona_atendida = cola_por_llegar.desencolar()
+                        lista_cajeros[
+                            i].tiempo_servicio = random_service_time()
+                        lista_cajeros[
+                            i].persona_atendida = cola_por_llegar.desencolar()
                         lista_cajeros[i].disponible = False
                         servidor_recien_asignado = i
                         break
@@ -81,8 +83,11 @@ while (cola_por_llegar.tamano() > 0 or not Cajero.todos_cajeros_disponibles(
                 if cola_por_atender.tamano() < 6:
                     cola_por_atender.encolar(cola_por_llegar.desencolar())
                 else:
-                    random_decline(cola_por_atender,cola_por_llegar,personas_que_declinaron)
-    # Manejo de servidores  
+                    random_decline(
+                        cola_por_atender,
+                        cola_por_llegar,
+                        personas_que_declinaron)
+    # Manejo de servidores
     for i in range(maximo_servidores):
         if (lista_cajeros[i].tiempo_servicio > 0
                 and not lista_cajeros[i].disponible
@@ -91,16 +96,20 @@ while (cola_por_llegar.tamano() > 0 or not Cajero.todos_cajeros_disponibles(
             lista_cajeros[i].tiempo_servicio -= tiempo_para_evento
             # Le sumamos tiempo de servicio al cajero
             lista_cajeros[i].tiempo_servicio_total += tiempo_para_evento
-            # Le sumamos tiempo de sistema a la persona siendo atendida por el cajero
-            lista_cajeros[i].persona_atendida.tiempo_sistema += tiempo_para_evento
+            # Le sumamos tiempo de sistema a la persona siendo atendida por el
+            # cajero
+            lista_cajeros[
+                i].persona_atendida.tiempo_sistema += tiempo_para_evento
             # Verificamos si el cajero termino te atender a alguien
             if lista_cajeros[i].tiempo_servicio == 0:
                 if cola_por_atender.tamano() > 0:
-                    lista_cajeros[i].persona_atendida = cola_por_atender.desencolar()
+                    lista_cajeros[
+                        i].persona_atendida = cola_por_atender.desencolar()
                     lista_cajeros[i].tiempo_servicio = random_service_time()
                     lista_cajeros[i].disponible = False
                 else:
-                    personas_fuera_del_sistema.append(lista_cajeros[i].persona_atendida)
+                    personas_fuera_del_sistema.append(
+                        lista_cajeros[i].persona_atendida)
                     lista_cajeros[i].persona_atendida = None
                     lista_cajeros[i].disponible = True
     # Agregamos tiempo en el sistema a las personas en la cola
@@ -113,8 +122,8 @@ print "----------------------------------------------------------------"
 print "Analisis de resultados: "
 print "---------------------------------------------------------------- "
 print "(a) El tiempo esperado que un cliente pasa en el sistema %0.2f" % (Persona.tiempo_promedio_en_sistema(personas_fuera_del_sistema))
-print "(b) Porcentaje de personas que declinaron %0.2f" % (personas_que_declinaron*maximo_personas/100)
+print "(b) Porcentaje de personas que declinaron %0.2f" % (personas_que_declinaron * maximo_personas / 100)
 print "(c) El porcentaje de tiempo desocupado de cada cajero"
 for i in range(maximo_servidores):
-    print "    Cajero %d: %0.6f" % (i,tiempo_actual - lista_cajeros[i].tiempo_servicio_total)
+    print "    Cajero %d: %0.6f" % (i, tiempo_actual - lista_cajeros[i].tiempo_servicio_total)
 print "---------------------------------------------------------------- "
