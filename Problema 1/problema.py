@@ -1,7 +1,7 @@
 from __future__ import division
 
-from aleatorio import random_arrival_time, proximo_evento,\
-    random_service_time, random_decline
+from aleatorio import (random_arrival_time, proximo_evento, random_service_time,
+                       random_decline)
 from cajero import Cajero
 from cola import Cola
 from persona import Persona
