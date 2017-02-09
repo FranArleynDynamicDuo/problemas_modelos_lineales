@@ -7,9 +7,6 @@ from cola import Cola
 from persona import Persona
 
 
-LLEGADA = 'llegada'
-SERVICIO = 'servicio'
-INFINITO = 999999999
 maximo_personas = 20
 maximo_servidores = 4
 
