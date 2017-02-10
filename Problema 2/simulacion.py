@@ -4,7 +4,7 @@ from __future__ import division
 from aleatorio import (random_arrival_time, proximo_evento, random_service_time,
                        random_decline)
 from cajero import Cajero, cajero_con_menos_cola
-from cola import Cola
+from commons.cola import Cola
 from persona import Persona
 
 
@@ -39,7 +39,7 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     print ""
 
     # SIMULACION
-    while (cola_por_llegar.tamano() > 0 or not Cajero.todos_cajeros_disponibles(
+    while (cola_por_llegar.tamano() > 0 or not Cajero.todos_servidores_disponibles(
             lista_cajeros) or cola_por_atender.tamano() > 0):
         servidor_recien_asignado = 10
     #     print "Tiempo Actual: %0.6f" % (tiempo_actual)

@@ -1,44 +1,42 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 
-from aleatorio import (random_arrival_time, proximo_evento, random_service_time,
-                       random_decline)
-from cajero import Cajero
+from aleatorio import (random_boat_type, proximo_evento)
+from buque import Buque
 from commons.cola import Cola
-from persona import Persona
+from puerto import Puerto, Existe_Puerto_Libre, Puerto_A, Puerto_B
 
 
-def iniciar_simulacion(maximo_personas, maximo_servidores):
+def iniciar_simulacion(maximo_buques):
     print "----------------------------------------------------------------"
     print "------------------- Preparando la simulacion! ------------------"
     print "----------------------------------------------------------------"
     print "Parametros: "
     print "----------------------------------------------------------------"
-    print "(a) maximo_personas %d" % (maximo_personas)
-    print "(b) maximo_servidores %d" % (maximo_servidores)
+    print "(a) maximo_buques %d" % (maximo_buques)
     print "----------------------------------------------------------------"
     print ""
-
+    maximo_servidores = 2
     cola_por_llegar = Cola()
     cola_por_atender = Cola()
 
     tiempo_actual = 0
-    personas_que_declinaron = 0
-    lista_cajeros = maximo_servidores * [Cajero()]
-    personas_fuera_del_sistema = []
+    buques_que_declinaron = 0
+    lista_cajeros = maximo_servidores * [Puerto()]
+    buques_fuera_del_sistema = []
 
-    for i in range(maximo_personas):
-        cola_por_llegar.encolar(Persona(random_arrival_time()))
+    for i in range(maximo_buques):
+        cola_por_llegar.encolar(random_boat_type())
 
-    for i in range(maximo_servidores):
-        lista_cajeros[i] = Cajero()
+    lista_cajeros[0] = Puerto_A()
+    lista_cajeros[1] = Puerto_B()
 
     print "----------------------------------------------------------------"
     print "------------------- Iniciando la simulacion! -------------------"
     print "----------------------------------------------------------------"
     print ""
     # SIMULACION
-    while (cola_por_llegar.tamano() > 0 or not Cajero.todos_servidores_disponibles(
+    while (cola_por_llegar.tamano() > 0 or not Existe_Puerto_Libre(
             lista_cajeros) or cola_por_atender.tamano() > 0):
         servidor_recien_asignado = 10
     #     print "Tiempo Actual: %0.6f" % (tiempo_actual)
@@ -67,32 +65,21 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
             if cola_por_llegar.primero().tiempo_llegada == 0:
                 # Si llego un cliente, no hay cola y hay servidor disponible, lo
                 # aceptamos
-                if cola_por_atender.esta_vacia() and Cajero.existe_servidor_disponible(
+                if cola_por_atender.esta_vacia() and Existe_Puerto_Libre(
                         lista_cajeros):
                     # Encontramos el proximo servidor disponible
                     for i in range(maximo_servidores):
                         if lista_cajeros[i].disponible:
-                            lista_cajeros[
-                                i].tiempo_servicio = random_service_time()
-                            lista_cajeros[
-                                i].persona_atendida = cola_por_llegar.desencolar()
-                            lista_cajeros[i].disponible = False
-                            servidor_recien_asignado = i
+                            lista_cajeros[i].recibir_buque(cola_por_llegar.desencolar())
+                            servidor_recien_asignado = lista_cajeros[i]
                             break
                 else:
-                    if cola_por_atender.tamano() < 6:
-                        cola_por_atender.encolar(cola_por_llegar.desencolar())
-                    else:
-                        personas_que_declinaron = random_decline(
-                            cola_por_atender,
-                            cola_por_llegar,
-                            personas_que_declinaron,
-                            personas_fuera_del_sistema)
+                    cola_por_atender.encolar(cola_por_llegar.desencolar())
         # Manejo de servidores
         for i in range(maximo_servidores):
             if (lista_cajeros[i].tiempo_servicio > 0
                     and not lista_cajeros[i].disponible
-                    and servidor_recien_asignado != i):
+                    and servidor_recien_asignado != lista_cajeros[i]):
                 # Disminuimos el tiempo de servicio restante para el cliente
                 # actual
                 lista_cajeros[i].tiempo_servicio -= tiempo_para_evento
@@ -104,20 +91,14 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
                     i].persona_atendida.tiempo_sistema += tiempo_para_evento
                 # Verificamos si el cajero termino te atender a alguien
                 if lista_cajeros[i].tiempo_servicio == 0:
+                    buques_fuera_del_sistema.append(
+                            lista_cajeros[i].persona_atendida)
                     if cola_por_atender.tamano() > 0:
-                        personas_fuera_del_sistema.append(
-                            lista_cajeros[i].persona_atendida)
-                        lista_cajeros[
-                            i].persona_atendida = cola_por_atender.desencolar()
-                        lista_cajeros[
-                            i].tiempo_servicio = random_service_time()
-                        lista_cajeros[i].disponible = False
+                        lista_cajeros[i].recibir_buque(cola_por_atender.desencolar())
                     else:
-                        personas_fuera_del_sistema.append(
-                            lista_cajeros[i].persona_atendida)
                         lista_cajeros[i].persona_atendida = None
                         lista_cajeros[i].disponible = True
-        # Agregamos tiempo en el sistema a las personas en la cola
+        # Agregamos tiempo en el sistema a las buques en la cola
         for persona in cola_por_atender.items:
             persona.tiempo_sistema += tiempo_para_evento
 
@@ -126,8 +107,8 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"
-    print "(a) El tiempo esperado que un cliente pasa en el sistema %0.2f" % (Persona.tiempo_promedio_en_sistema(personas_fuera_del_sistema))
-    print "(b) Porcentaje de personas que declinaron %0.2f" % (personas_que_declinaron * 100 / maximo_personas)
+    print "(a) El tiempo esperado que un cliente pasa en el sistema %0.2f" % (Buque.tiempo_promedio_en_sistema(buques_fuera_del_sistema))
+    print "(b) Porcentaje de buques que declinaron %0.2f" % (buques_que_declinaron * 100 / maximo_buques)
     print "(c) El porcentaje de tiempo desocupado de cada cajero"
     for i in range(maximo_servidores):
         print "    Cajero %d: %0.6f" % (i, tiempo_actual - lista_cajeros[i].tiempo_servicio_total)
