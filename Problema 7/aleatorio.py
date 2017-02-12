@@ -3,7 +3,7 @@ import random
 
 def random_demand():
     random_number = random.random()
-    if 0 <= nro_autos and nro_autos <= 0.05:
+    if 0 <= random_number and random_number <= 0.05:
         return 12
     elif 0.05 < random_number and random_number <= 0.20:
         return 13
