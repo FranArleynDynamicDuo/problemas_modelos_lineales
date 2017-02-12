@@ -1,12 +1,22 @@
 import numpy
 import random
+from commons.servidor import Servidor
+
+CLIENTS_PER_HOUR = 60
+UNIFORM_LOW = 6
+UNIFORM_HIGH = 10
+
+LEFT = 1
+MODE = 3
+RIGHT = 5
 
 def tiempo_de_llegada():
-	return numpy.random.exponential(scale=0.083)
+    return numpy.random.exponential(scale=12)
+
 
 def proximo_evento(proxima_llegada, cajeros):
-    servidores_validos = Cajero.tiempo_servicio_valido(cajeros)
-    
+    servidores_validos = Servidor.tiempo_servicio_valido(cajeros)
+
     if servidores_validos == [] and proxima_llegada == 0:
         print "Error"
         exit()
@@ -22,3 +32,20 @@ def proximo_evento(proxima_llegada, cajeros):
         return min(servidores_validos)
     else:
         return proxima_llegada
+
+
+def random_arrival_time():
+    return numpy.random.exponential(scale=1)
+
+
+def random_cola():
+    proc_cola = random.random()
+    print proc_cola
+    return 1
+
+
+def random_service_time_A():
+    return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)
+   
+def randome_service_time_B():
+	return numpy.random.triangular(LEFT,MODE,RIGHT)

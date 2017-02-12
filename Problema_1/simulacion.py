@@ -121,6 +121,7 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
         for persona in cola_por_atender.items:
             persona.tiempo_sistema += tiempo_para_evento
 
+    print ""
     print "----------------------------------------------------------------"
     print "---------------- Se ha terminado la simulacion! ----------------"
     print "----------------------------------------------------------------"
@@ -132,3 +133,4 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     for i in range(maximo_servidores):
         print "    Cajero %d: %0.6f" % (i, tiempo_actual - lista_cajeros[i].tiempo_servicio_total)
     print "---------------------------------------------------------------- "
+    print ""
