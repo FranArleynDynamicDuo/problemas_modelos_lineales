@@ -1,8 +1,15 @@
 from buque import Buque 
 from commons.servidor import Servidor
+from commons.cola import Cola
 
 class Puerto(Servidor):
-    pass
+    def __init__(self):
+        self.disponible = True
+        self.persona_atendida = None
+        self.cola_por_atender = Cola()
+        self.tiempo_servicio = 0
+        self.tiempo_servicio_total = 0
+        self.buques_atendidos = []
 
 class Puerto_A(Puerto):
     
