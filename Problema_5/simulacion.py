@@ -70,7 +70,8 @@ def iniciar_simulacion(maximo_buques):
                     # Encontramos el proximo servidor disponible
                     for i in range(maximo_servidores):
                         if lista_servidores[i].disponible:
-                            lista_servidores[i].recibir_buque(cola_por_llegar.desencolar())
+                            lista_servidores[i].recibir_buque(
+                                cola_por_llegar.desencolar())
                             servidor_recien_asignado = lista_servidores[i]
                             break
                 else:
@@ -92,11 +93,12 @@ def iniciar_simulacion(maximo_buques):
                 # Verificamos si el cajero termino te atender a alguien
                 if lista_servidores[i].tiempo_servicio == 0:
                     buques_fuera_del_sistema.append(
-                            lista_servidores[i].persona_atendida)
+                        lista_servidores[i].persona_atendida)
                     lista_servidores[i].buques_atendidos.append(
-                            lista_servidores[i].persona_atendida)
+                        lista_servidores[i].persona_atendida)
                     if cola_por_atender.tamano() > 0:
-                        lista_servidores[i].recibir_buque(cola_por_atender.desencolar())
+                        lista_servidores[i].recibir_buque(
+                            cola_por_atender.desencolar())
                     else:
                         lista_servidores[i].persona_atendida = None
                         lista_servidores[i].disponible = True
