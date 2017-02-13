@@ -41,6 +41,9 @@ def iniciar_simulacion(maximo_personas):
     while (cola_por_llegar.tamano() > 0 or not Servidor.todos_servidores_disponibles(lista_servidores) or centro_b.cola_por_atender.tamano() > 0
            or not Servidor.todos_servidores_disponibles(lista_servidores) or centro_b.cola_por_atender.tamano() > 0):
 
+        persona_recien_llegada_A = None
+        persona_recien_llegada_B = None
+
         # print "Tiempo Actual: %0.6f" % (tiempo_actual)
         # Verificamos cual es el evento mas proximo
         if cola_por_llegar.tamano() > 0:
@@ -80,10 +83,12 @@ def iniciar_simulacion(maximo_personas):
         # Manejamos las llegadas de la cola A
         if (centro_a.persona_atendida and centro_a.persona_atendida !=
                 persona_recien_llegada_A):
+            #
             if centro_a.tiempo_servicio > 0:
                 centro_a.tiempo_servicio -= tiempo_para_evento
-
+            #
             if centro_a.tiempo_servicio == 0 and centro_b.cola_por_atender.tamano() < 4:
+                #
                 if centro_b.cola_por_atender.esta_vacia(
                 ) and centro_b.disponible:
                     # Encontramos el proximo servidor disponible
@@ -94,6 +99,14 @@ def iniciar_simulacion(maximo_personas):
                 else:
                     centro_b.cola_por_atender.encolar(
                         centro_a.persona_atendida)
+                # 
+                if not centro_a.cola_por_atender.esta_vacia():
+                    centro_a.persona_atendida = centro_a.cola_por_atender.desencolar()
+                    centro_a.tiempo_servicio = random_service_time_A()
+                    centro_a.disponible = False
+                else:
+                    centro_a.persona_atendida = None
+                    centro_a.disponible = True
         # Manejamos las llegadas de la cola B
         if (centro_b.persona_atendida and centro_b.persona_atendida !=
                 persona_recien_llegada_B):
@@ -111,3 +124,13 @@ def iniciar_simulacion(maximo_personas):
                         centro_b.persona_atendida)
                     centro_b.persona_atendida = None
                     centro_b.disponible = True
+
+    print "----------------------------------------------------------------"
+    print "---------------- Se ha terminado la simulacion! ----------------"
+    print "----------------------------------------------------------------"
+    print "Analisis de resultados: "
+    print "----------------------------------------------------------------"
+    print "(c) El porcentaje de tiempo desocupado de cada terminal"
+    print "    Terminal A: %0.6f" % (tiempo_actual - lista_servidores[0].tiempo_servicio_total)
+    print "    Terminal B: %0.6f" % (tiempo_actual - lista_servidores[1].tiempo_servicio_total)
+    print "---------------------------------------------------------------- "

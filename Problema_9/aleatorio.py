@@ -1,6 +1,7 @@
 import numpy
 import random
 from commons.servidor import Servidor
+from Problema_9.centro import Centro
 
 CLIENTS_PER_HOUR = 60
 UNIFORM_LOW = 6
@@ -15,7 +16,7 @@ def tiempo_de_llegada():
 
 
 def proximo_evento(proxima_llegada, cajeros):
-    servidores_validos = Servidor.tiempo_servicio_valido(cajeros)
+    servidores_validos = Centro.tiempo_servicio_valido(cajeros)
 
     if servidores_validos == [] and proxima_llegada == 0:
         print "Error"
