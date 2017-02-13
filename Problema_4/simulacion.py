@@ -4,7 +4,6 @@ from aleatorio import tiempo_de_falla, tiempo_de_reparacion
 
 def iniciar_simulacion(maquinas_funcionando, maquinas_repuesto):
 
-
 	cola_maquina_repuesto = Cola()
 	tiempo_en_fallar_maquina = [0]*4
 	tiempo_falla = 0
@@ -45,7 +44,7 @@ def iniciar_simulacion(maquinas_funcionando, maquinas_repuesto):
 				if tiempo_reparo == 0:
 					maquinas_repuesto = 1
 
-	return tiempo_falla
+	return tiempo_falla/10
 
 
 
