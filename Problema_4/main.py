@@ -31,11 +31,11 @@ print "------------------- Iniciando la simulacion! -------------------"
 print "----------------------------------------------------------------"
 print ""
 
-print ""
 print "----------------------------------------------------------------"
 print "---------------- Se ha terminado la simulacion! ----------------"
 print "----------------------------------------------------------------"
 print "Analisis de resultados: "
 print "----------------------------------------------------------------"
-print "(a) Tiempo de falla esperado del sistema: %0.2f horas" % problema(esperanza, numero_simulaciones, maquinas_funcionando, maquinas_repuesto)
+result = problema(esperanza, numero_simulaciones, maquinas_funcionando, maquinas_repuesto)
+print "(a) Tiempo de falla esperado del sistema: %0.2f horas" % round(result,2)
 
