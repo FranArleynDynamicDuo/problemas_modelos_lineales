@@ -8,14 +8,6 @@ from puerto import Puerto, Existe_Puerto_Libre, Puerto_A, Puerto_B
 
 
 def iniciar_simulacion(maximo_buques):
-    print "----------------------------------------------------------------"
-    print "------------------- Preparando la simulacion! ------------------"
-    print "----------------------------------------------------------------"
-    print "Parametros: "
-    print "----------------------------------------------------------------"
-    print "(a) maximo_buques %d" % (maximo_buques)
-    print "----------------------------------------------------------------"
-    print ""
     maximo_servidores = 2
     cola_por_llegar = Cola()
     cola_por_atender = Cola()
@@ -31,10 +23,6 @@ def iniciar_simulacion(maximo_buques):
     lista_servidores[0] = Puerto_A()
     lista_servidores[1] = Puerto_B()
 
-    print "----------------------------------------------------------------"
-    print "------------------- Iniciando la simulacion! -------------------"
-    print "----------------------------------------------------------------"
-    print ""
     # SIMULACION
     while (cola_por_llegar.tamano() > 0 or not Existe_Puerto_Libre(
             lista_servidores) or cola_por_atender.tamano() > 0):
@@ -106,17 +94,28 @@ def iniciar_simulacion(maximo_buques):
         for persona in cola_por_atender.items:
             persona.tiempo_sistema += tiempo_para_evento
 
+    prom_buques = (len(
+        lista_servidores[0].buques_atendidos) + len(lista_servidores[1].buques_atendidos))
+    prom_dias_tanque = (tiempo_actual / maximo_buques)
+    p_desocupado_a = (
+        tiempo_actual -
+        lista_servidores[0].tiempo_servicio_total)
+    p_desocupado_b = (
+        tiempo_actual -
+        lista_servidores[1].tiempo_servicio_total)
     print "----------------------------------------------------------------"
     print "---------------- Se ha terminado la simulacion! ----------------"
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"
-    print "(a) Número promedio de buques tanque en el puerto: %d" % (len(lista_servidores[0].buques_atendidos) + len(lista_servidores[1].buques_atendidos))
+    print "(a) Número promedio de buques tanque en el puerto: %d" % (prom_buques)
     total_tiempo_en_sistema = 0
     for buque in buques_fuera_del_sistema:
         total_tiempo_en_sistema += buque.tiempo_sistema
-    print "(b) Número promedio de días que pasa un buque tanque en el puerto: %0.6f" % (total_tiempo_en_sistema / maximo_buques)
+    print "(b) Número promedio de días que pasa un buque tanque en el puerto: %0.6f" % (prom_dias_tanque)
     print "(c) El porcentaje de tiempo desocupado de cada terminal"
-    print "    Terminal A: %0.6f" % (tiempo_actual - lista_servidores[0].tiempo_servicio_total)
-    print "    Terminal B: %0.6f" % (tiempo_actual - lista_servidores[1].tiempo_servicio_total)
+    print "    Terminal A: %0.6f" % (p_desocupado_a)
+    print "    Terminal B: %0.6f" % (p_desocupado_b)
     print "---------------------------------------------------------------- "
+
+    return [prom_buques, prom_dias_tanque, p_desocupado_a, p_desocupado_b]

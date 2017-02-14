@@ -1,22 +1,31 @@
 # -*- coding: utf-8 -*-
 from simulacion import iniciar_simulacion
-import math
 from commons.estadistica import error_95_prcnt
 
 def problema(numero_simulaciones=1):
 
     print ""
     print "********************************************************************************"
-    print "********************problema************** Problema 1 **********************************"
+    print "********************************** Problema 1 **********************************"
     print "********************************************************************************"
     print ""
-    
+
     maximo_personas = 2000
     maximo_servidores = 6
     lista_porcentaje_declinaron = []
     lista_esperanza_cliente = []
     promedio_total_porcentaje_declinaron = 0
     promedio_total_esperanza_cliente = 0
+    
+    print "----------------------------------------------------------------"
+    print "------------------- Preparando la simulacion! ------------------"
+    print "----------------------------------------------------------------"
+    print "Parametros: "
+    print "----------------------------------------------------------------"
+    print "(a) maximo_personas %d" % (maximo_personas)
+    print "(b) maximo_servidores %d" % (maximo_servidores)
+    print "----------------------------------------------------------------"
+    print ""
     
     for i in range(numero_simulaciones):
         x = iniciar_simulacion(maximo_personas, maximo_servidores)

@@ -10,12 +10,6 @@ from Problema_9.aleatorio import proximo_evento, random_service_time_A,\
 
 
 def iniciar_simulacion(maximo_personas):
-    print "----------------------------------------------------------------"
-    print "------------------- Preparando la simulacion! ------------------"
-    print "----------------------------------------------------------------"
-    print "Parametros: "
-    print "----------------------------------------------------------------"
-    print "(a) maximo_personas %d" % (maximo_personas)
 
     cola_por_llegar = Cola()
 
@@ -32,11 +26,6 @@ def iniciar_simulacion(maximo_personas):
 
     for i in range(maximo_personas):
         cola_por_llegar.encolar(Persona(tiempo_de_llegada()))
-
-    print "----------------------------------------------------------------"
-    print "------------------- Iniciando la simulacion! -------------------"
-    print "----------------------------------------------------------------"
-    print ""
 
     while (cola_por_llegar.tamano() > 0 or not Servidor.todos_servidores_disponibles(lista_servidores) or centro_b.cola_por_atender.tamano() > 0
            or not Servidor.todos_servidores_disponibles(lista_servidores) or centro_b.cola_por_atender.tamano() > 0):
@@ -99,7 +88,7 @@ def iniciar_simulacion(maximo_personas):
                 else:
                     centro_b.cola_por_atender.encolar(
                         centro_a.persona_atendida)
-                # 
+                #
                 if not centro_a.cola_por_atender.esta_vacia():
                     centro_a.persona_atendida = centro_a.cola_por_atender.desencolar()
                     centro_a.tiempo_servicio = random_service_time_A()
@@ -124,13 +113,18 @@ def iniciar_simulacion(maximo_personas):
                         centro_b.persona_atendida)
                     centro_b.persona_atendida = None
                     centro_b.disponible = True
-
-    print "----------------------------------------------------------------"
-    print "---------------- Se ha terminado la simulacion! ----------------"
+    p_desocupado_a = (
+        tiempo_actual -
+        lista_servidores[0].tiempo_servicio_total)
+    p_desocupado_b = (
+        tiempo_actual -
+        lista_servidores[1].tiempo_servicio_total)
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"
     print "(c) El porcentaje de tiempo desocupado de cada terminal"
-    print "    Terminal A: %0.6f" % (tiempo_actual - lista_servidores[0].tiempo_servicio_total)
-    print "    Terminal B: %0.6f" % (tiempo_actual - lista_servidores[1].tiempo_servicio_total)
+    print "    Terminal A: %0.6f" % (p_desocupado_a)
+    print "    Terminal B: %0.6f" % (p_desocupado_b)
     print "---------------------------------------------------------------- "
+
+    return [p_desocupado_a, p_desocupado_b]

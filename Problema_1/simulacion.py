@@ -9,15 +9,6 @@ from persona import Persona
 
 
 def iniciar_simulacion(maximo_personas, maximo_servidores):
-    print "----------------------------------------------------------------"
-    print "------------------- Preparando la simulacion! ------------------"
-    print "----------------------------------------------------------------"
-    print "Parametros: "
-    print "----------------------------------------------------------------"
-    print "(a) maximo_personas %d" % (maximo_personas)
-    print "(b) maximo_servidores %d" % (maximo_servidores)
-    print "----------------------------------------------------------------"
-    print ""
 
     cola_por_llegar = Cola()
     cola_por_atender = Cola()
