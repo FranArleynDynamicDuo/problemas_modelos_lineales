@@ -33,7 +33,7 @@ def problema(numero_simulaciones):
         140,280,145,208,333,250,221,318,120,72,166,194,87,94,170,65,190,359,312,205,77,197,359,174,140,167,181,143,99,
         297,92,246,211,275,224,171,290,291,220,239,126,89,66,35,26,129,234,181,180,58,40,54,123,78,319,389,121]
 
-    embarques = sample(Nemb, 9)
+    
     acum_tiempo_total = 0
     acum_prom_pasajero = 0
     acum_maximo_pasajero = 0
@@ -47,7 +47,7 @@ def problema(numero_simulaciones):
     print ""
 
     for i in range(numero_simulaciones):
-
+        embarques = sample(Nemb, 9)
         result = iniciar_simulacion(embarques)
 
         acum_tiempo_total += result[0]

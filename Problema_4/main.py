@@ -1,5 +1,7 @@
-from simulacion import iniciar_simulacion
+from __future__ import division
+
 from commons.estadistica import error_95_prcnt
+from simulacion import iniciar_simulacion
 
 
 def problema(numero_simulaciones):
@@ -48,7 +50,7 @@ def problema(numero_simulaciones):
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"
-    print "(a) Tiempo de falla esperado del sistema: %0.2f horas" % round(media_esperanza, 2)
+    print "(a) Tiempo de falla esperado del sistema: %0.2f horas" % (media_esperanza)
     print ""
     print "----------------------------------------------------------------"
     print "Intervalo de Confianza: "
