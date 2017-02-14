@@ -120,17 +120,21 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
         # Agregamos tiempo en el sistema a las personas en la cola
         for persona in cola_por_atender.items:
             persona.tiempo_sistema += tiempo_para_evento
-
+    
+    porcentaje_declinaron = (personas_que_declinaron * 100 / maximo_personas)
+    tiempo_esperado_cliente = (Persona.tiempo_promedio_en_sistema(personas_fuera_del_sistema))
     print ""
     print "----------------------------------------------------------------"
     print "---------------- Se ha terminado la simulacion! ----------------"
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"
-    print "(a) El tiempo esperado que un cliente pasa en el sistema %0.2f" % (Persona.tiempo_promedio_en_sistema(personas_fuera_del_sistema))
-    print "(b) Porcentaje de personas que declinaron %0.2f" % (personas_que_declinaron * 100 / maximo_personas)
+    print "(a) El tiempo esperado que un cliente pasa en el sistema %0.2f" % (tiempo_esperado_cliente)
+    print "(b) Porcentaje de personas que declinaron %0.2f" % (porcentaje_declinaron)
     print "(c) El porcentaje de tiempo desocupado de cada cajero"
     for i in range(maximo_servidores):
         print "    Cajero %d: %0.6f" % (i, tiempo_actual - lista_cajeros[i].tiempo_servicio_total)
     print "---------------------------------------------------------------- "
     print ""
+    
+    return [porcentaje_declinaron, tiempo_esperado_cliente]

@@ -1,5 +1,5 @@
 # Problema *
-from aleatorio import random_autos_vendidos, random_tipo_autos,\
+from Problema_8.aleatorio import random_autos_vendidos, random_tipo_autos,\
     random_tipo_autos_mediano, random_tipo_autos_lujo
 
 def iniciar_simulacion(vendedores):
@@ -48,6 +48,7 @@ def iniciar_simulacion(vendedores):
     print "(a) La comision promedio de un vendedor es de : %d" % (comision)
     print "---------------------------------------------------------------- "
     print ""
-
+    
     return comision
+
     
