@@ -11,10 +11,6 @@ def problema(numero_simulaciones=1):
     print "********************************************************************************"
     print ""
     
-    y = input("Numero de simulaciones: ")
-    numero_simulaciones = int(y)
-    MAXIMO_DIAS = 60
-    Q = 100
     VENDEDORES = 5
     promedio_total = 0
     lista_ventas = []
