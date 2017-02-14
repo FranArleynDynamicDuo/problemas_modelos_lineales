@@ -10,8 +10,8 @@ def problema(numero_simulaciones=1):
     print "********************************************************************************"
     print ""
 
-    maximo_personas = 2000
-    maximo_servidores = 6
+    maximo_personas = 100
+    maximo_servidores = 4
     lista_porcentaje_declinaron = []
     lista_esperanza_cliente = []
     promedio_total_porcentaje_declinaron = 0
@@ -36,7 +36,18 @@ def problema(numero_simulaciones=1):
 
     promedio_total_porcentaje_declinaron /= numero_simulaciones
     promedio_total_esperanza_cliente /= numero_simulaciones    
-    
+
+    m_error_95_esp = error_95_prcnt(lista_esperanza_cliente, promedio_total_esperanza_cliente)
+
+    print ""
+    print "----------------------------------------------------------------------"
+    print "El tiempo esperado que un cliente pasa en el sistema TOTAL es: %0.2f" % (promedio_total_esperanza_cliente)
+
+    print "----------------------------------------------------------------------"
+    print "El intervalo de confianza de 95 por ciento de la esperanza esta entre %0.4f y %0.4f" % (promedio_total_esperanza_cliente-m_error_95_esp,promedio_total_esperanza_cliente+m_error_95_esp)
+    print "----------------------------------------------------------------------"
+    print ""
+
     m_error_95_decl = error_95_prcnt(lista_porcentaje_declinaron, promedio_total_porcentaje_declinaron)
 
     print ""
@@ -48,14 +59,5 @@ def problema(numero_simulaciones=1):
     print "----------------------------------------------------------------------"
     print ""
     
-    m_error_95_esp = error_95_prcnt(lista_esperanza_cliente, promedio_total_esperanza_cliente)
-
-    print ""
-    print "----------------------------------------------------------------------"
-    print "El tiempo esperado que un cliente pasa en el sistema TOTAL es: %0.2f" % (promedio_total_esperanza_cliente)
-
-    print "----------------------------------------------------------------------"
-    print "El intervalo de confianza de 95 por ciento de la esperanza esta entre %0.4f y %0.4f" % (promedio_total_esperanza_cliente-m_error_95_esp,promedio_total_esperanza_cliente+m_error_95_esp)
-    print "----------------------------------------------------------------------"
-    print ""
+    
 

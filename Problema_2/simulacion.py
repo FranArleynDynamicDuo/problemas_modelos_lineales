@@ -16,6 +16,7 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     print "----------------------------------------------------------------"
     print "(a) maximo_personas %d" % (maximo_personas)
     print "(b) maximo_servidores %d" % (maximo_servidores)
+    
     print "----------------------------------------------------------------"
     print ""
 
@@ -130,7 +131,8 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     print "(b) Porcentaje de personas que declinaron  %0.2f" % (porcentaje_declinaron)
     print "(c) El porcentaje de tiempo desocupado de cada cajero"
     for i in range(maximo_servidores):
-        print "    Cajero %d: %0.6f" % (i, tiempo_actual - lista_cajeros[i].tiempo_servicio_total)
+        tiempo_total = tiempo_actual - lista_cajeros[i].tiempo_servicio_total
+        print "    Cajero %d: %0.6f" % (i, tiempo_total * 100 / tiempo_actual)
     print "---------------------------------------------------------------- "
 
     return [porcentaje_declinaron, tiempo_esperado_cliente]

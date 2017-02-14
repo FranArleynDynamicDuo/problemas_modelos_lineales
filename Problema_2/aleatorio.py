@@ -27,8 +27,6 @@ def random_service_time():
 def random_decline(cola_por_atender, cola_por_llegar, personas_que_declinaron,
                    personas_fuera_del_sistema):
     resp = random.random()
-    print 'resp %0.2f'  % resp
-    print 'tamaño de cola %d'  % cola_por_atender.tamano()
     if 6 <= cola_por_atender.tamano(
     ) and cola_por_atender.tamano() <= 8:
         if resp <= 0.20:

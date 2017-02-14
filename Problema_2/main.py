@@ -11,8 +11,8 @@ def problema(numero_simulaciones=1):
     print "********************************************************************************"
     print ""
 
-    maximo_personas = 2000
-    maximo_servidores = 6
+    maximo_personas = 100
+    maximo_servidores = 4
     lista_porcentaje_declinaron = []
     lista_esperanza_cliente = []
     promedio_total_porcentaje_declinaron = 0
