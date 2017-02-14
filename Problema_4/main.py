@@ -1,4 +1,5 @@
 from simulacion import iniciar_simulacion
+import math
 
 print ""
 print "********************************************************************************"
@@ -21,14 +22,21 @@ def error_95_prcnt (lis_data, promedio):
 
 y = input("Numero de simulaciones: ")
 numero_simulaciones = int(y)
-    	for i in range(numero_simulaciones):
-       		esperanza += iniciar_simulacion(maquinas_funcionando, maquinas_repuesto)
-
-    return esperanza/numero_simulaciones
 
 maquinas_funcionando = 4
-maquinas_repuesto	 = 3
+maquinas_repuesto    = 3
 esperanza = 0
+lista_esperanza = []
+
+def problema(esperanza, numero_simulaciones, maquinas_funcionando, maquinas_repuesto):
+    acum_esperanza = 0
+    for i in range(numero_simulaciones):
+        esperanza = iniciar_simulacion(maquinas_funcionando, maquinas_repuesto)
+        acum_esperanza += esperanza
+
+        lista_esperanza.append(esperanza)
+    return acum_esperanza/numero_simulaciones, lista_esperanza
+
 
 print "----------------------------------------------------------------"
 print "------------------- Preparando la simulacion! ------------------"
@@ -49,5 +57,17 @@ print "----------------------------------------------------------------"
 print "Analisis de resultados: "
 print "----------------------------------------------------------------"
 result = problema(esperanza, numero_simulaciones, maquinas_funcionando, maquinas_repuesto)
-print "(a) Tiempo de falla esperado del sistema: %0.2f horas" % round(result,2)
+print "(a) Tiempo de falla esperado del sistema: %0.2f horas" % round(result[0],2)
+print ""
+print "----------------------------------------------------------------"
+print "Intervalo de Confianza: "
+print "----------------------------------------------------------------"
+
+# Se calcula la media para 
+promedio_total = result[0]
+lista_esperanza = result[1]
+# Se calcula el margen de error
+m_error_95 = error_95_prcnt(lista_esperanza, promedio_total)
+print "El intervalo de confianza de 95 por ciento esta entre (%f , %f)" % (promedio_total-m_error_95,promedio_total+m_error_95)
+print ""
 
