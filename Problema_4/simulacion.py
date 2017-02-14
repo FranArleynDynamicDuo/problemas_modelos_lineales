@@ -44,7 +44,12 @@ def iniciar_simulacion(maquinas_funcionando, maquinas_repuesto):
 				if tiempo_reparo == 0:
 					maquinas_repuesto = 1
 
-	return tiempo_falla/10
+	print "----------------------------------------------------------------"
+	print "----------------------- Resultados! ----------------------------"
+	print "----------------------------------------------------------------"
+	print "(a) El tiempo de falla: %0.2f " % (tiempo_falla)
+
+	return tiempo_falla
 
 
 
