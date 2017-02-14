@@ -34,16 +34,13 @@ def proximo_evento(proxima_llegada, cajeros):
     else:
         return proxima_llegada
 
-
 def random_arrival_time():
     return numpy.random.exponential(scale=1)
-
 
 def random_cola():
     proc_cola = random.random()
     print proc_cola
     return 1
-
 
 def random_service_time_A():
     return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)

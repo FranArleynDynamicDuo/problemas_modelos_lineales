@@ -2,7 +2,6 @@
 from simulacion import iniciar_simulacion
 import math
 
-
 def varianza( lis_data, promedio ):
     suma = 0
     for i in range(len(lis_data)):
@@ -34,8 +33,10 @@ for i in range(numero_simulaciones):
     lista_ventas.append(x)
     promedio_total += x
 
+# Se calcula la media para 
 promedio_total /= numero_simulaciones
     
+# Se calcula el margen de error
 m_error_95 = error_95_prcnt(lista_ventas, promedio_total)
 
 print ""
