@@ -7,23 +7,9 @@ COSTO_POR_PEDIDO = 10
 
 
 def iniciar_simulacion(maximo_dias, maximo_punto_reorden):
-    print "----------------------------------------------------------------"
-    print "------------------- Preparando la simulacion! ------------------"
-    print "----------------------------------------------------------------"
-    print "Parametros: "
-    print "----------------------------------------------------------------"
-    print "(a) maximo_dias %d" % (maximo_dias)
-    print "(b) maximo_punto_reorden %d" % (maximo_punto_reorden)
-    print "----------------------------------------------------------------"
-    print ""
     # Inicalizamos las variables compartidas
     costo_minimo = 0
     reorden_optimo = 0
-
-    print "----------------------------------------------------------------"
-    print "------------------- Iniciando la simulacion! -------------------"
-    print "----------------------------------------------------------------"
-    print ""
 
     # Ciclamos por distintos puntos de reorden para conseguir un punto de
     # reorden optimo
@@ -65,5 +51,14 @@ def iniciar_simulacion(maximo_dias, maximo_punto_reorden):
         elif costo_acumulado < costo_minimo:
             costo_minimo = costo_acumulado
             reorden_optimo = punto_reorden
+
+    print "----------------------------------------------------------------"
+    print "----------------------- Resultados! ----------------------------"
+    print "----------------------------------------------------------------"
+    print ""
+    print "Analisis de resultados: "
+    print "----------------------------------------------------------------"
+    print "(a) El punto de reorden optimo es %d unidades con costo $%d " % (reorden_optimo, costo_minimo)
+    print ""
 
     return [reorden_optimo, costo_minimo]

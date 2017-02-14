@@ -65,9 +65,9 @@ def problema(numero_simulaciones,embarques):
 	print ""
 	
 	# Calculamos la media del tiempo total, promedio de pasajero y maximo de pasajeros
-	media_tiempo_total = acum_tiempo_total
-	media_prom_pasajero = acum_prom_pasajero
-	media_maximo_pasajero = acum_maximo_pasajero
+	media_tiempo_total = acum_tiempo_total/numero_simulaciones
+	media_prom_pasajero = acum_prom_pasajero/numero_simulaciones
+	media_maximo_pasajero = acum_maximo_pasajero/numero_simulaciones
 
 	# Se calcula el margen de error del tiempo total, promedio de pasajero y maximo de pasajeros
 	m_error_95_tiempo_total = error_95_prcnt(lista_tiempo_total, media_tiempo_total)

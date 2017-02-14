@@ -27,6 +27,21 @@ def problema(numero_simulaciones):
 	acum_reorden = 0
 	acum_costo_unidades = 0
 
+	print "----------------------------------------------------------------"
+	print "------------------- Preparando la simulacion! ------------------"
+	print "----------------------------------------------------------------"
+	print "Parametros: "
+	print "----------------------------------------------------------------"
+	print "(a) maximo_dias %d" % (MAXIMO_DIAS)
+	print "(b) maximo_punto_reorden %d" % (Q)
+	print "----------------------------------------------------------------"
+	print ""
+
+	print "----------------------------------------------------------------"
+	print "------------------- Iniciando la simulacion! -------------------"
+	print "----------------------------------------------------------------"
+	print ""
+
 	for i in range(numero_simulaciones):
 		result = iniciar_simulacion(MAXIMO_DIAS,Q)
 
@@ -35,10 +50,33 @@ def problema(numero_simulaciones):
 		acum_costo_unidades += result[1]
 		lista_costo_unidades.append(result[1])
 
-	print lista_reorden
-	print lista_reorden
+	# Calculamos la media del punto de reorden optimo y de la sunidades de costo
+	media_reorden = acum_reorden/numero_simulaciones
+	media_costo_unidades = acum_costo_unidades/numero_simulaciones
+	# Calculamos el margen de error del punto de reorden optimo y de las unidades de costo
+	m_error_95_reorden = error_95_prcnt( lista_reorden, media_reorden)
+	m_error_95_costo_unidades = error_95_prcnt( lista_costo_unidades, media_costo_unidades)
 
-	return (result, acum_reorden, acum_costo_unidades, lista_reorden, lista_costo_unidades)
+	print "----------------------------------------------------------------"
+	print "---------------- Se ha terminado la simulacion! ----------------"
+	print "----------------------------------------------------------------"
+	print "Analisis de resultados: "
+	print "----------------------------------------------------------------"
+	print "(a) El punto de reorden optimo es %d unidades con costo $%d " % (media_reorden, media_costo_unidades)
+	print "---------------------------------------------------------------- "
+	print ""
+
+	print "----------------------------------------------------------------"
+	print "Intervalo de Confianza: "
+	print "----------------------------------------------------------------"
+	print ""
+	print "----------------------------------------------------------------------"
+	print "El intervalo de confianza de 95 por ciento del punto de reorden optimo esta entre (%f , %f)" % (media_reorden-m_error_95_reorden,media_reorden+m_error_95_reorden)
+	print "El intervalo de confianza de 95 por ciento de las unidades de costo esta entre (%f , %f)" % (media_costo_unidades-m_error_95_costo_unidades,media_costo_unidades+m_error_95_costo_unidades)
+	print "----------------------------------------------------------------------"
+	print ""
+
+
 
 y = input("Numero de simulaciones: ")
 numero_simulaciones = int(y)
@@ -47,32 +85,5 @@ lista_reorden = []
 lista_costo_unidades = []
 promedio_total = 0
 
-result = problema(numero_simulaciones)
-print result
-print "----------------------------------------------------------------"
-print "---------------- Se ha terminado la simulacion! ----------------"
-print "----------------------------------------------------------------"
-print "Analisis de resultados: "
-print "----------------------------------------------------------------"
-print "(a) El punto de reorden optimo es %d unidades con costo $%d " % (result[0][0], result[0][1])
-print "---------------------------------------------------------------- "
-print ""
+problema(numero_simulaciones)
 
-acum_reorden = result[1]
-acum_costo_unidades = result[2]
-lista_reorden = result[3]
-lista_costo_unidades = result[4]
-
-# Calculamos la media del punto de reorden optimo y de la sunidades de costo
-media_reorden = acum_reorden/numero_simulaciones
-media_costo_unidades = acum_costo_unidades/numero_simulaciones
-
-# Calculamos el margen de error del punto de reorden optimo y de las unidades de costo
-m_error_95_reorden = error_95_prcnt( lista_reorden, media_reorden)
-m_error_95_costo_unidades = error_95_prcnt( lista_costo_unidades, media_costo_unidades)
-
-print "----------------------------------------------------------------------"
-print "El intervalo de confianza de 95 por ciento del punto de reorden optimo esta entre (%f , %f)" % (media_reorden-m_error_95_reorden,media_reorden+m_error_95_reorden)
-print "El intervalo de confianza de 95 por ciento de las unidades de costo esta entre (%f , %f)" % (media_costo_unidades-m_error_95_costo_unidades,media_costo_unidades+m_error_95_costo_unidades)
-print "----------------------------------------------------------------------"
-print ""
