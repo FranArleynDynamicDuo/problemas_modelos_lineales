@@ -99,8 +99,7 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
                 lista_cajeros[i].tiempo_servicio_total += tiempo_para_evento
                 # Le sumamos tiempo de sistema a la persona siendo atendida por el
                 # cajero
-                lista_cajeros[
-                    i].persona_atendida.tiempo_sistema += tiempo_para_evento
+                lista_cajeros[i].persona_atendida.tiempo_sistema += tiempo_para_evento
                 # Verificamos si el cajero termino te atender a alguien
                 if lista_cajeros[i].tiempo_servicio == 0:
                     if lista_cajeros[i].cola_por_atender.tamano() > 0:
@@ -122,6 +121,7 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
 
     porcentaje_declinaron = (personas_que_declinaron * 100 / maximo_personas)
     tiempo_esperado_cliente = (Persona.tiempo_promedio_en_sistema(personas_fuera_del_sistema))
+    porcentaje_tiempo_clista = []
     print "----------------------------------------------------------------"
     print "---------------- Se ha terminado la simulacion! ----------------"
     print "----------------------------------------------------------------"
@@ -132,7 +132,9 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     print "(c) El porcentaje de tiempo desocupado de cada cajero"
     for i in range(maximo_servidores):
         tiempo_total = tiempo_actual - lista_cajeros[i].tiempo_servicio_total
-        print "    Cajero %d: %0.6f" % (i, tiempo_total * 100 / tiempo_actual)
+        aux = (tiempo_total * 100 / tiempo_actual)
+        porcentaje_tiempo_clista.append(aux)
+        print "    Cajero %d: %0.6f" % (i, aux)
     print "---------------------------------------------------------------- "
 
-    return [porcentaje_declinaron, tiempo_esperado_cliente]
+    return [porcentaje_declinaron, tiempo_esperado_cliente, porcentaje_tiempo_clista[0],porcentaje_tiempo_clista[1],porcentaje_tiempo_clista[2],porcentaje_tiempo_clista[3]]

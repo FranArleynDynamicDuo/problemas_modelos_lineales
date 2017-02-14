@@ -75,6 +75,7 @@ def iniciar_simulacion(maximo_personas):
             #
             if centro_a.tiempo_servicio > 0:
                 centro_a.tiempo_servicio -= tiempo_para_evento
+                centro_a.tiempo_servicio_total += tiempo_para_evento
             #
             if centro_a.tiempo_servicio == 0 and centro_b.cola_por_atender.tamano() < 4:
                 #
@@ -100,7 +101,7 @@ def iniciar_simulacion(maximo_personas):
         if (centro_b.persona_atendida and centro_b.persona_atendida !=
                 persona_recien_llegada_B):
             centro_b.tiempo_servicio -= tiempo_para_evento
-
+            centro_b.tiempo_servicio_total += tiempo_para_evento
             if centro_b.tiempo_servicio == 0:
                 if centro_b.cola_por_atender.tamano() > 0:
                     personas_fuera_del_sistema.append(

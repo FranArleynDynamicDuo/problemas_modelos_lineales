@@ -15,3 +15,4 @@ def error_95_prcnt (lis_data, promedio):
     varz = varianza( lis_data, promedio )
     nmuestra = len(lis_data)
     return (1.96*(math.sqrt(varz/nmuestra)))  
+
