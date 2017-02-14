@@ -34,13 +34,25 @@ def error_95_prcnt (lis_data, promedio):
     return (1.96*(math.sqrt(varz/nmuestra))) 
 
 
-def problema(numero_simulaciones,embarques):
+def problema(numero_simulaciones):
+
+	print "----------------------------------------------------------------"
+	print "------------------- Preparando la simulacion! ------------------"
+	print "----------------------------------------------------------------"
+	print ""
+
+	embarques = sample(Nemb, 9)
 	acum_tiempo_total = 0
 	acum_prom_pasajero = 0
 	acum_maximo_pasajero = 0
 	lista_tiempo_total = []
 	lista_prom_pasajero = []
 	lista_maximo_pasajero = []
+
+	print "----------------------------------------------------------------"
+	print "------------------- Iniciando la simulacion! -------------------"
+	print "----------------------------------------------------------------"
+	print ""
 
 	for i in range(numero_simulaciones):
 
@@ -53,16 +65,6 @@ def problema(numero_simulaciones,embarques):
 		lista_tiempo_total.append(result[0])
 		lista_prom_pasajero.append(result[1])
 		lista_maximo_pasajero.append(result[2])
-
-	print "----------------------------------------------------------------"
-	print "---------------- Se ha terminado la simulacion! ----------------"
-	print "----------------------------------------------------------------"
-	print "Analisis de resultados: "
-	print "----------------------------------------------------------------"
-	print "(a) El tiempo total del recorrido en segundos: %0.2f " % (acum_tiempo_total)
-	print "(b) El nro de pasajeros promedio a bordo del tren es: %0.2f" % (acum_prom_pasajero)  
-	print "(c) El nro maximo de pasajeros embarcados es: %d " % (acum_maximo_pasajero)
-	print ""
 	
 	# Calculamos la media del tiempo total, promedio de pasajero y maximo de pasajeros
 	media_tiempo_total = acum_tiempo_total/numero_simulaciones
@@ -75,25 +77,24 @@ def problema(numero_simulaciones,embarques):
 	m_error_95_maximo_pasajero = error_95_prcnt(lista_maximo_pasajero, media_maximo_pasajero)
 
 	print "----------------------------------------------------------------"
+	print "---------------- Se ha terminado la simulacion! ----------------"
+	print "----------------------------------------------------------------"
+	print "Analisis de resultados: "
+	print "----------------------------------------------------------------"
+	print "(a) El tiempo total del recorrido en segundos: %0.2f " % (media_tiempo_total)
+	print "(b) El nro de pasajeros promedio a bordo del tren es: %0.2f" % (media_prom_pasajero)  
+	print "(c) El nro maximo de pasajeros embarcados es: %d " % (media_maximo_pasajero)
+	print ""
+	print "----------------------------------------------------------------"
 	print "Intervalo de Confianza: "
 	print "----------------------------------------------------------------"
-	print ""
 	print "El intervalo de confianza de 95 por ciento del tiempo total esta entre (%0.2f , %0.2f)" % (media_tiempo_total-m_error_95_tiempo_total,media_tiempo_total+m_error_95_tiempo_total)
 	print "El intervalo de confianza de 95 por ciento del promedio de pasajeros esta entre (%0.2f , %0.2f)" % (media_prom_pasajero-m_error_95_prom_pasajero,media_prom_pasajero+m_error_95_prom_pasajero)
 	print "El intervalo de confianza de 95 por ciento del maximo de pasajeros esta entre (%0.2f , %0.2f)" % (media_maximo_pasajero-m_error_95_maximo_pasajero,media_maximo_pasajero+m_error_95_maximo_pasajero)
 	print ""
 
-print "----------------------------------------------------------------"
-print "------------------- Preparando la simulacion! ------------------"
-print "----------------------------------------------------------------"
 
 y = input("Numero de simulaciones: ")
 numero_simulaciones = int(y)
-embarques = sample(Nemb, 9)
 
-print "----------------------------------------------------------------"
-print "------------------- Iniciando la simulacion! -------------------"
-print "----------------------------------------------------------------"
-print ""
-
-problema(numero_simulaciones,embarques)
+problema(numero_simulaciones)

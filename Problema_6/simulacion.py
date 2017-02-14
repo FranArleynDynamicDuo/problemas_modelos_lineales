@@ -80,6 +80,14 @@ def iniciar_simulacion(embarques):
 	promPasajeros = NpasTotal/9
 	maximoPasajeros = max(embarques)
 
+	print "----------------------------------------------------------------"
+	print "----------------------- Resultados! ----------------------------"
+	print "----------------------------------------------------------------"
+	print "(a) El tiempo total del recorrido en segundos: %0.2f " % (tiempoTotal)
+	print "(b) El nro de pasajeros promedio a bordo del tren es: %0.2f" % (promPasajeros)  
+	print "(c) El nro maximo de pasajeros embarcados es: %d " % (maximoPasajeros)
+	print ""
+
 	return [tiempoTotal, promPasajeros, maximoPasajeros]
 
 
