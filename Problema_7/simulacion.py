@@ -66,13 +66,4 @@ def iniciar_simulacion(maximo_dias, maximo_punto_reorden):
             costo_minimo = costo_acumulado
             reorden_optimo = punto_reorden
 
-    print "----------------------------------------------------------------"
-    print "---------------- Se ha terminado la simulacion! ----------------"
-    print "----------------------------------------------------------------"
-    print "Analisis de resultados: "
-    print "----------------------------------------------------------------"
-    print "(a) El punto de reorden optimo es %d unidades con costo $%d " % (reorden_optimo, costo_minimo)
-    print "---------------------------------------------------------------- "
-    print ""
-
     return [reorden_optimo, costo_minimo]
