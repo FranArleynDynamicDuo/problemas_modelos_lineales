@@ -1,5 +1,18 @@
 # -*- coding: utf-8 -*-
 from simulacion import iniciar_simulacion
+import math
+
+def varianza( lis_data, promedio ):
+    suma = 0
+    for i in range(len(lis_data)):
+        suma += ((lis_data[i] - promedio)*(lis_data[i] - promedio))
+    suma /= (len(lis_data))
+    return suma
+
+def error_95_prcnt (lis_data, promedio):
+    varz = varianza( lis_data, promedio )
+    nmuestra = len(lis_data)
+    return (1.96*(math.sqrt(varz/nmuestra)))
 
 def problema(numero_simulaciones=1):
 
@@ -37,7 +50,7 @@ def problema(numero_simulaciones=1):
     print "----------------------------------------------------------------------"
     print ""
     
-    m_error_95_esp = error_95_esp(lista_esperanza_cliente, promedio_total_esperanza_cliente)
+    m_error_95_esp = error_95_prcnt(lista_esperanza_cliente, promedio_total_esperanza_cliente)
 
     print ""
     print "----------------------------------------------------------------------"

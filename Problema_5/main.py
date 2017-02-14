@@ -14,3 +14,5 @@ def problema(numero_simulaciones=1):
     for i in range(numero_simulaciones):
         iniciar_simulacion(maximo_personas)
 
+problema()
+
