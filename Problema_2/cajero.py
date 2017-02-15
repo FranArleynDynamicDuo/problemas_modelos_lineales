@@ -23,7 +23,9 @@ class Cajero(Servidor):
 def cajero_con_menos_cola(lista_cajeros):
     min_cajero_cola = lista_cajeros[0]
     for cajero in lista_cajeros:
-        if cajero.cola_por_atender.tamano(
-        ) < min_cajero_cola.cola_por_atender.tamano():
+        if cajero.cola_por_atender.tamano() < min_cajero_cola.cola_por_atender.tamano():
+            min_cajero_cola = cajero
+        elif (cajero.cola_por_atender.tamano() == min_cajero_cola.cola_por_atender.tamano() and
+              cajero.persona_atendida is None and min_cajero_cola.persona_atendida is not None):
             min_cajero_cola = cajero
     return min_cajero_cola
