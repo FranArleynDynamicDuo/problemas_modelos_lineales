@@ -10,7 +10,7 @@ def problema(numero_simulaciones=1):
     print "********************************************************************************"
     print ""
 
-    maximo_personas = 100
+    maximo_de_tiempo = 100
     lista_prombuque = []
     lista_promdiast = []
     lista_prct_desa = []
@@ -25,12 +25,12 @@ def problema(numero_simulaciones=1):
     print "----------------------------------------------------------------"
     print "Parametros: "
     print "----------------------------------------------------------------"
-    print "(a) maximo_buques %d" % (maximo_personas)
+    print "(a) maximo_de_tiempo %d" % (maximo_de_tiempo)
     print "----------------------------------------------------------------"
     print ""
 
     for i in range(numero_simulaciones):
-        x = iniciar_simulacion(maximo_personas)
+        x = iniciar_simulacion(maximo_de_tiempo)
         lista_prombuque.append(x[0])
         lista_promdiast.append(x[1])
         lista_prct_desa.append(x[2])

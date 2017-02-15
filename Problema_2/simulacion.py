@@ -9,16 +9,7 @@ from persona import Persona
 
 
 def iniciar_simulacion(maximo_de_tiempo, maximo_servidores):
-    print "----------------------------------------------------------------"
-    print "------------------- Preparando la simulacion! ------------------"
-    print "----------------------------------------------------------------"
-    print "Parametros: "
-    print "----------------------------------------------------------------"
-    print "(a) tiempo_maximo %d" % (maximo_de_tiempo)
-    print "(b) maximo_servidores %d" % (maximo_servidores)
     
-    print "----------------------------------------------------------------"
-    print ""
 
     cola_por_atender = Cola()
 
@@ -32,11 +23,6 @@ def iniciar_simulacion(maximo_de_tiempo, maximo_servidores):
         lista_cajeros[i] = Cajero()
         
     proxima_llegada = random_arrival_time()
-
-    print "----------------------------------------------------------------"
-    print "------------------- Iniciando la simulacion! -------------------"
-    print "----------------------------------------------------------------"
-    print ""
 
     # SIMULACION
     while (tiempo_actual < maximo_de_tiempo or not Cajero.todos_servidores_disponibles(
@@ -117,8 +103,6 @@ def iniciar_simulacion(maximo_de_tiempo, maximo_servidores):
     porcentaje_declinaron = (personas_que_declinaron * 100 / len(personas_fuera_del_sistema))
     tiempo_esperado_cliente = (Persona.tiempo_promedio_en_sistema(personas_fuera_del_sistema))
     porcentaje_tiempo_clista = []
-    print "----------------------------------------------------------------"
-    print "---------------- Se ha terminado la simulacion! ----------------"
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"

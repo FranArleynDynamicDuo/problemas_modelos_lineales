@@ -25,6 +25,16 @@ def problema(numero_simulaciones=1):
     lista_cajeros2 = []
     lista_cajeros3 = []
     lista_cajeros4 =[]
+    
+    print "----------------------------------------------------------------"
+    print "------------------- Preparando la simulacion! ------------------"
+    print "----------------------------------------------------------------"
+    print "Parametros: "
+    print "----------------------------------------------------------------"
+    print "(a) tiempo_maximo %d" % (maximo_de_tiempo)
+    print "(b) maximo_servidores %d" % (maximo_servidores)
+    print "----------------------------------------------------------------"
+    print ""
 
     for i in range(numero_simulaciones):
         x = iniciar_simulacion(maximo_de_tiempo, maximo_servidores)

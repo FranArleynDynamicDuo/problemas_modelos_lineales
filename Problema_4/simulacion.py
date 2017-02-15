@@ -50,5 +50,5 @@ def iniciar_simulacion(maquinas_funcionando, maquinas_repuesto):
     print "----------------------- Resultados! ----------------------------"
     print "----------------------------------------------------------------"
     print "(a) El tiempo de falla: %0.2f " % (tiempo_falla)
-
+    print "----------------------------------------------------------------"
     return tiempo_falla/10

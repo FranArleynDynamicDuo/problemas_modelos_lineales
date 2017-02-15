@@ -5,11 +5,11 @@ from aleatorio import (random_boat_type, proximo_evento)
 from buque import Buque
 from commons.cola import Cola
 from puerto import Puerto, Existe_Puerto_Libre, Puerto_A, Puerto_B
+from Problema_5.aleatorio import random_arrival_time
 
 
-def iniciar_simulacion(maximo_buques):
+def iniciar_simulacion(maximo_de_tiempo):
     maximo_servidores = 2
-    cola_por_llegar = Cola()
     cola_por_atender = Cola()
 
     tiempo_actual = 0
@@ -17,28 +17,20 @@ def iniciar_simulacion(maximo_buques):
     lista_servidores = maximo_servidores * [Puerto()]
     buques_fuera_del_sistema = []
 
-    for i in range(maximo_buques):
-        cola_por_llegar.encolar(random_boat_type())
-
     lista_servidores[0] = Puerto_A()
     lista_servidores[1] = Puerto_B()
+    
+    proxima_llegada = random_arrival_time()
 
     # SIMULACION
-    while (cola_por_llegar.tamano() > 0 or not Existe_Puerto_Libre(
+    while (tiempo_actual < maximo_de_tiempo or not Existe_Puerto_Libre(
             lista_servidores) or cola_por_atender.tamano() > 0):
         servidor_recien_asignado = 10
     #     print "Tiempo Actual: %0.6f" % (tiempo_actual)
         # Verificamos cual es el evento mas proximo
-        if cola_por_llegar.tamano() > 0:
-            tiempo_para_evento = proximo_evento(
-                cola_por_llegar.primero().tiempo_llegada,
-                lista_servidores)
-        # En caso de que la cola este vacia, hacemos la llamada de manera
-        # distinta
-        else:
-            tiempo_para_evento = proximo_evento(
-                None,
-                lista_servidores)
+        tiempo_para_evento = proximo_evento(
+            proxima_llegada,
+            lista_servidores)
         if tiempo_para_evento == 0:
             print "Error tiempo para evento invalido"
             exit()
@@ -47,23 +39,23 @@ def iniciar_simulacion(maximo_buques):
     #     print "En la cola de espera hay: %d" % (cola_por_atender.tamano())
         tiempo_actual += tiempo_para_evento
         # Manejamos las llegadas al sistema
-        if cola_por_llegar.tamano() > 0:
-            cola_por_llegar.primero().tiempo_llegada -= tiempo_para_evento
-            # Verificamos si un cliente ha llegado
-            if cola_por_llegar.primero().tiempo_llegada == 0:
-                # Si llego un cliente, no hay cola y hay servidor disponible, lo
-                # aceptamos
-                if cola_por_atender.esta_vacia() and Existe_Puerto_Libre(
-                        lista_servidores):
-                    # Encontramos el proximo servidor disponible
-                    for i in range(maximo_servidores):
-                        if lista_servidores[i].disponible:
-                            lista_servidores[i].recibir_buque(
-                                cola_por_llegar.desencolar())
-                            servidor_recien_asignado = lista_servidores[i]
-                            break
-                else:
-                    cola_por_atender.encolar(cola_por_llegar.desencolar())
+        proxima_llegada -= tiempo_para_evento
+        # Verificamos si un cliente ha llegado
+        if proxima_llegada == 0:
+            # Si llego un cliente, no hay cola y hay servidor disponible, lo
+            # aceptamos
+            if cola_por_atender.esta_vacia() and Existe_Puerto_Libre(
+                    lista_servidores):
+                # Encontramos el proximo servidor disponible
+                for i in range(maximo_servidores):
+                    if lista_servidores[i].disponible:
+                        lista_servidores[i].recibir_buque(
+                            random_boat_type())
+                        servidor_recien_asignado = lista_servidores[i]
+                        break
+            else:
+                cola_por_atender.encolar(random_boat_type())
+            proxima_llegada = random_arrival_time()
         # Manejo de servidores
         for i in range(maximo_servidores):
             if (lista_servidores[i].tiempo_servicio > 0
@@ -96,15 +88,13 @@ def iniciar_simulacion(maximo_buques):
 
     prom_buques = (len(
         lista_servidores[0].buques_atendidos) + len(lista_servidores[1].buques_atendidos))
-    prom_dias_tanque = (tiempo_actual / maximo_buques)
+    prom_dias_tanque = (tiempo_actual / len(buques_fuera_del_sistema))
     p_desocupado_a = (
         tiempo_actual -
         lista_servidores[0].tiempo_servicio_total)
     p_desocupado_b = (
         tiempo_actual -
         lista_servidores[1].tiempo_servicio_total)
-    print "----------------------------------------------------------------"
-    print "---------------- Se ha terminado la simulacion! ----------------"
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"
