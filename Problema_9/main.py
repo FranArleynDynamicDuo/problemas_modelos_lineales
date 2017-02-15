@@ -1,3 +1,4 @@
+from __future__ import division
 from simulacion import iniciar_simulacion
 from commons.estadistica import error_95_prcnt
 

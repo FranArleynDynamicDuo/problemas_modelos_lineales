@@ -1,4 +1,5 @@
 # Problema *
+from __future__ import division
 from Problema_8.aleatorio import random_autos_vendidos, random_tipo_autos,\
     random_tipo_autos_mediano, random_tipo_autos_lujo
 

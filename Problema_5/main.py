@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
+
 from simulacion import iniciar_simulacion
 from commons.estadistica import error_95_prcnt
 
@@ -88,3 +90,5 @@ def problema(numero_simulaciones=1):
     print "El intervalo de confianza de 95 por ciento del tiempo de desocupado (B) esta entre %f y %f" % (prom_lista_prct_desb - m_error_95_decl, prom_lista_prct_desb + m_error_95_decl)
     print "----------------------------------------------------------------------"
     print ""
+
+problema(2)

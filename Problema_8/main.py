@@ -1,4 +1,6 @@
 # *** coding: utf*8 ***
+from __future__ import division
+
 from simulacion import iniciar_simulacion
 import math
 from commons.estadistica import error_95_prcnt

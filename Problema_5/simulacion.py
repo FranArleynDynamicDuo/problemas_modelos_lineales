@@ -5,7 +5,7 @@ from aleatorio import (random_boat_type, proximo_evento)
 from buque import Buque
 from commons.cola import Cola
 from puerto import Puerto, Existe_Puerto_Libre, Puerto_A, Puerto_B
-from Problema_5.aleatorio import random_arrival_time
+from aleatorio import random_arrival_time
 
 
 def iniciar_simulacion(maximo_de_tiempo):

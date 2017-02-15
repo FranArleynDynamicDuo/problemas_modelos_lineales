@@ -3,7 +3,7 @@ from simulacion import iniciar_simulacion
 from commons.estadistica import error_95_prcnt
 
 
-def problema(numero_simulaciones=1):
+def problema(numero_simulaciones):
 
     print ""
     print "********************************************************************************"
