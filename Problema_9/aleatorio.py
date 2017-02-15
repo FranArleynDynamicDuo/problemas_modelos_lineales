@@ -11,10 +11,6 @@ LEFT = 1
 MODE = 3
 RIGHT = 5
 
-def tiempo_de_llegada():
-    return numpy.random.exponential(scale=12)
-
-
 def proximo_evento(proxima_llegada, cajeros):
     servidores_validos = Centro.tiempo_servicio_valido(cajeros)
 
@@ -35,7 +31,7 @@ def proximo_evento(proxima_llegada, cajeros):
         return proxima_llegada
 
 def random_arrival_time():
-    return numpy.random.exponential(scale=1)
+    return numpy.random.exponential(scale=12)
 
 def random_cola():
     proc_cola = random.random()
@@ -45,5 +41,5 @@ def random_cola():
 def random_service_time_A():
     return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)
    
-def randome_service_time_B():
+def random_service_time_B():
 	return numpy.random.triangular(LEFT,MODE,RIGHT)

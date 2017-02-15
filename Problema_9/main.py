@@ -10,7 +10,7 @@ def problema(numero_simulaciones=1):
     print "********************************************************************************"
     print ""
 
-    maximo_personas = 2000
+    maximo_de_tiempo = 2000
 
     lista_prct_desa = []
     lista_prct_desb = []
@@ -22,10 +22,10 @@ def problema(numero_simulaciones=1):
     print "----------------------------------------------------------------"
     print "Parametros: "
     print "----------------------------------------------------------------"
-    print "(a) maximo_personas %d" % (maximo_personas)
+    print "(a) maximo_de_tiempo %d" % (maximo_de_tiempo)
 
     for i in range(numero_simulaciones):
-        x = iniciar_simulacion(maximo_personas)
+        x = iniciar_simulacion(maximo_de_tiempo)
         lista_prct_desa.append(x[0])
         lista_prct_desb.append(x[1])
         prom_lista_prct_desa += x[0]
