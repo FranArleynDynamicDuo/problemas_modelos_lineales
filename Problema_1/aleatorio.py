@@ -3,6 +3,7 @@ import numpy
 import random
 
 from cajero import Cajero
+from Problema_1.persona import Persona
 
 
 CLIENTS_PER_HOUR = 60
@@ -24,43 +25,41 @@ def random_service_time():
     return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)
 
 
-def random_decline(cola_por_atender, cola_por_llegar, personas_que_declinaron,
+def random_decline(cola_por_atender, personas_que_declinaron,
                    personas_fuera_del_sistema):
     resp = random.random()
-    print 'resp %0.2f'  % resp
-    print 'tamaño de cola %d'  % cola_por_atender.tamano()
     if 6 <= cola_por_atender.tamano(
     ) and cola_por_atender.tamano() <= 8:
         if resp <= 0.20:
             personas_que_declinaron += 1
-            personas_fuera_del_sistema.append(cola_por_llegar.desencolar())
+            personas_fuera_del_sistema.append(Persona())
         else:
             cola_por_atender.encolar(
-                cola_por_llegar.desencolar())
+                Persona())
 
     elif 9 <= cola_por_atender.tamano() and cola_por_atender.tamano() <= 10:
         if resp <= 0.40:
             personas_que_declinaron += 1
-            personas_fuera_del_sistema.append(cola_por_llegar.desencolar())
+            personas_fuera_del_sistema.append(Persona())
         else:
             cola_por_atender.encolar(
-                cola_por_llegar.desencolar())
+                Persona())
 
     elif 11 <= cola_por_atender.tamano() and cola_por_atender.tamano() <= 14:
         if resp <= 0.60:
             personas_que_declinaron += 1
-            personas_fuera_del_sistema.append(cola_por_llegar.desencolar())
+            personas_fuera_del_sistema.append(Persona())
         else:
             cola_por_atender.encolar(
-                cola_por_llegar.desencolar())
+                Persona())
 
     elif 15 <= cola_por_atender.tamano():
         if resp <= 0.80:
             personas_que_declinaron += 1
-            personas_fuera_del_sistema.append(cola_por_llegar.desencolar())
+            personas_fuera_del_sistema.append(Persona())
         else:
             cola_por_atender.encolar(
-                cola_por_llegar.desencolar())
+                Persona())
     return personas_que_declinaron
 
 

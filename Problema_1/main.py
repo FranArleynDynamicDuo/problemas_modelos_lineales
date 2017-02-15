@@ -10,7 +10,7 @@ def problema(numero_simulaciones=1):
     print "********************************************************************************"
     print ""
 
-    maximo_personas = 100
+    maximo_de_tiempo = 100
     maximo_servidores = 4
     lista_porcentaje_declinaron = []
     lista_esperanza_cliente = []
@@ -22,13 +22,13 @@ def problema(numero_simulaciones=1):
     print "----------------------------------------------------------------"
     print "Parametros: "
     print "----------------------------------------------------------------"
-    print "(a) maximo_personas %d" % (maximo_personas)
+    print "(a) maximo_de_tiempo %d" % (maximo_de_tiempo)
     print "(b) maximo_servidores %d" % (maximo_servidores)
     print "----------------------------------------------------------------"
     print ""
     
     for i in range(numero_simulaciones):
-        x = iniciar_simulacion(maximo_personas, maximo_servidores)
+        x = iniciar_simulacion(maximo_de_tiempo, maximo_servidores)
         lista_porcentaje_declinaron.append(x[0])
         lista_esperanza_cliente.append(x[1])
         promedio_total_porcentaje_declinaron += x[0]

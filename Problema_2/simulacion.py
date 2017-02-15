@@ -8,19 +8,18 @@ from commons.cola import Cola
 from persona import Persona
 
 
-def iniciar_simulacion(maximo_personas, maximo_servidores):
+def iniciar_simulacion(maximo_de_tiempo, maximo_servidores):
     print "----------------------------------------------------------------"
     print "------------------- Preparando la simulacion! ------------------"
     print "----------------------------------------------------------------"
     print "Parametros: "
     print "----------------------------------------------------------------"
-    print "(a) maximo_personas %d" % (maximo_personas)
+    print "(a) tiempo_maximo %d" % (maximo_de_tiempo)
     print "(b) maximo_servidores %d" % (maximo_servidores)
     
     print "----------------------------------------------------------------"
     print ""
 
-    cola_por_llegar = Cola()
     cola_por_atender = Cola()
 
     tiempo_actual = 0
@@ -28,11 +27,11 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     lista_cajeros = maximo_servidores * [Cajero()]
     personas_fuera_del_sistema = []
 
-    for i in range(maximo_personas):
-        cola_por_llegar.encolar(Persona(random_arrival_time()))
 
     for i in range(maximo_servidores):
         lista_cajeros[i] = Cajero()
+        
+    proxima_llegada = random_arrival_time()
 
     print "----------------------------------------------------------------"
     print "------------------- Iniciando la simulacion! -------------------"
@@ -40,21 +39,14 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     print ""
 
     # SIMULACION
-    while (cola_por_llegar.tamano() > 0 or not Cajero.todos_servidores_disponibles(
+    while (tiempo_actual < maximo_de_tiempo or not Cajero.todos_servidores_disponibles(
             lista_cajeros) or cola_por_atender.tamano() > 0):
         servidor_recien_asignado = 10
     #     print "Tiempo Actual: %0.6f" % (tiempo_actual)
         # Verificamos cual es el evento mas proximo
-        if cola_por_llegar.tamano() > 0:
-            tiempo_para_evento = proximo_evento(
-                cola_por_llegar.primero().tiempo_llegada,
-                lista_cajeros)
-        # En caso de que la cola este vacia, hacemos la llamada de manera
-        # distinta
-        else:
-            tiempo_para_evento = proximo_evento(
-                None,
-                lista_cajeros)
+        tiempo_para_evento = proximo_evento(
+            proxima_llegada,
+            lista_cajeros)
         if tiempo_para_evento == 0:
             print "Error tiempo para evento invalido"
             exit()
@@ -63,30 +55,31 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
     #     print "En la cola de espera hay: %d" % (cola_por_atender.tamano())
         tiempo_actual += tiempo_para_evento
         # Manejamos las llegadas al sistema
-        if cola_por_llegar.tamano() > 0:
-            cola_por_llegar.primero().tiempo_llegada -= tiempo_para_evento
+        if proxima_llegada > 0:
+            proxima_llegada -= tiempo_para_evento
             # Verificamos si un cliente ha llegado
-            if cola_por_llegar.primero().tiempo_llegada == 0:
+            if proxima_llegada == 0:
                 # Seleccionamos el cajero con menos cola
                 cajero_seleccionado = cajero_con_menos_cola(lista_cajeros)
                 # Si el cajero seleccionado esta vacio procedemos a atender
                 if cajero_seleccionado.cola_por_atender.tamano() == 0:
                     cajero_seleccionado.tiempo_servicio = random_service_time()
-                    cajero_seleccionado.persona_atendida = cola_por_llegar.desencolar()
+                    cajero_seleccionado.persona_atendida = Persona()
                     cajero_seleccionado.disponible = False
                     servidor_recien_asignado = cajero_seleccionado
                 # Si no esta vacia pero la cola es corta entonces lo encolamos en
                 # el cajero
                 elif cajero_seleccionado.cola_por_atender.tamano() < 6:
                     cajero_seleccionado.cola_por_atender.encolar(
-                        cola_por_llegar.desencolar())
+                        Persona())
                 #
                 else:
                     personas_que_declinaron = random_decline(
                         cajero_seleccionado.cola_por_atender,
-                        cola_por_llegar,
                         personas_que_declinaron,
                         personas_fuera_del_sistema)
+                    
+                proxima_llegada = random_arrival_time()
         # Manejo de servidores
         for i in range(maximo_servidores):
             if (lista_cajeros[i].tiempo_servicio > 0
@@ -119,7 +112,9 @@ def iniciar_simulacion(maximo_personas, maximo_servidores):
         for persona in cola_por_atender.items:
             persona.tiempo_sistema += tiempo_para_evento
 
-    porcentaje_declinaron = (personas_que_declinaron * 100 / maximo_personas)
+    
+
+    porcentaje_declinaron = (personas_que_declinaron * 100 / len(personas_fuera_del_sistema))
     tiempo_esperado_cliente = (Persona.tiempo_promedio_en_sistema(personas_fuera_del_sistema))
     porcentaje_tiempo_clista = []
     print "----------------------------------------------------------------"
