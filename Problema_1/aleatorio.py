@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import numpy
+# import numpy
 import random
 
 from cajero import Cajero
@@ -12,8 +12,7 @@ UNIFORM_HIGH = 5
 
 
 def random_arrival_time():
-    return numpy.random.exponential(scale=1)
-
+	return numpy.random.exponential(scale=1)
 
 def random_cola():
     proc_cola = random.random()
@@ -22,8 +21,8 @@ def random_cola():
 
 
 def random_service_time():
-    return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)
-
+	return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)
+	
 
 def random_decline(cola_por_atender, personas_que_declinaron,
                    personas_fuera_del_sistema):
