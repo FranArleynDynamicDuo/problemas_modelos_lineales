@@ -4,6 +4,7 @@ import random
 
 from cajero import Cajero
 from Problema_1.persona import Persona
+import numpy
 
 
 CLIENTS_PER_HOUR = 60
@@ -13,12 +14,6 @@ UNIFORM_HIGH = 5
 
 def random_arrival_time():
 	return numpy.random.exponential(scale=1)
-
-def random_cola():
-    proc_cola = random.random()
-    print proc_cola
-    return 1
-
 
 def random_service_time():
 	return numpy.random.uniform(low=UNIFORM_LOW, high=UNIFORM_HIGH)

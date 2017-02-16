@@ -91,4 +91,3 @@ def problema(numero_simulaciones=1):
     print "----------------------------------------------------------------------"
     print ""
 
-problema(2)

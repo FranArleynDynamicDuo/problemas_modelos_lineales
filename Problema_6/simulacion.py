@@ -1,6 +1,7 @@
 from random import randint, sample
 from collections import deque
 from math import log
+import random
 
 Nemb = [127,162,179,75,223,186,124,45,100,171,235,176,130,159,117,100,92,68,242,122,184,84,240,319,61,78,20,141,202, 
         213,204,360,169,206,326,210,335,233,102,243,135,310,138,95,216,99,346,220,191,230,219,225,271,270,110,305,157,
@@ -13,8 +14,8 @@ Nemb = [127,162,179,75,223,186,124,45,100,171,235,176,130,159,117,100,92,68,242,
 #Con esta funcion se calcula la distribucion empirica acumulada de la muestra
 def distribucion_empirica(Demb):
         m = len(Demb)
-        a = sl[0]
-        b = sl[m-1]
+        a = Demb[0]
+        b = Demb[m-1]
         i = 0
         y = []
 
@@ -23,7 +24,7 @@ def distribucion_empirica(Demb):
                 j = 0
                 while j < m:
                         xu = cota_superior(a,b,m,i)
-                        if sl[j] < xu:
+                        if Demb[j] < xu:
                                 yt = yt + 1/m
                                 j = j+1
                         else:
@@ -33,20 +34,20 @@ def distribucion_empirica(Demb):
 
         return y
 #Aqui se utiliza un loop para obtener el valor correcto de embarcados
-def obtener_embarcados(x)
+def obtener_embarcados(x):
         xs = sorted(x)
         m = len(xs)
         y = distribucion_empirica(xs)
         rng = random.random()
-
+        j = 0
         while j < m:
-                if rng <= y[j]
+                if rng <= y[j]:
                         return calcular_distribucion(rng,y,xs,j)
-                else
+                else:
                         j = j+1
 
 #Ecuacion de la recta despejada para obtener el valor de los embarcados
-def calcular_distribucion(u,y,x,j)
+def calcular_distribucion(u,y,x,j):
         xl = cota_inferior(x[0],x[199],200,j)
         xu = cota_superior(x[0],x[199],200,j)
         xf = xl + (u-y[j-1]/y[j]-y[j-1]) * (xu - xl)
@@ -54,94 +55,93 @@ def calcular_distribucion(u,y,x,j)
         return xf
 
 #La cota inferior del valor X                        
-def cota_inferior(a,b,m,i)
+def cota_inferior(a,b,m,i):
         xl = a + (b-a/m) * i
         return xl
 
 #La cota superior del valor X
-def cota_superior(a,b,m,i)
+def cota_superior(a,b,m,i):
         xu = a + (b-a/m) * (i+1)
         return xu
 
 
 
 def cantidad_desembargues(emb):
-	desembarques = 0
+    desembarques = 0
 
-	while emb > 0:
-		x = randint(1,100)
-		if 1 <= x < 50:
-			desembarques += 1
-		emb -= 1
-		return desembarques
+    while emb > 0:
+        x = randint(1,100)
+        if 1 <= x < 50:
+            desembarques += 1
+        emb -= 1
+        return desembarques
 
 def iniciar_simulacion(embarques):
 
-	NpasVect = [0,0,0,0,0,0,0,0,0,0]
-	NpasTotal = 0
-	estacion = 0
+    NpasVect = [0,0,0,0,0,0,0,0,0,0]
+    NpasTotal = 0
+    estacion = 0
 
-	tiempoT1 = 0
-	tiempoT2 = 0
-	tiempoTotal = 0
+    tiempoT1 = 0
+    tiempoT2 = 0
+    tiempoTotal = 0
 
-	while 0 <= estacion < 10:
-		if estacion == 0:
-			Npas = embarques[0]
-		#	print('cantidad de embarques en la estacion 0 '+str(Npas))
-			Tint0 = 100*(1+(0.1*log(Npas)))
-		#	print('tiempo en segundos desde estacion 0 a 1' +str(Tint0))
-			Nemb = Npas
-			Ndes = 0
-			Tde0 = 20*(1+(0.1*log(Ndes+Nemb)))
-		#	print('tiempo en segundos emb en la estacion 0 ' +str(Tde0))
-			tiempoT0 = Tint0 + Tde0 
-		#	print ('tiempo T0' +str(tiempoT0))
-			NpasVect[0] = Npas
-			NpasTotal = Npas
-		#	print ('Npas' +str(Npas))
-			
-		else:
-			if 1 <= estacion <= 8:
-				Nemb = embarques[estacion]
-			#	print('cantidad de embarques en la estacion'+str(Nemb))
-				Ndes = cantidad_desembargues(NpasVect[estacion-1])
-			#	print('cantidad de desembarques en la estacion' +str(Ndes))
-				Npas1 = NpasVect[estacion-1] + Nemb - Ndes
-			#	print ('cantidad de psajeros actual' +str(Npas1))
-				Tint1 = 100*(1+(0.1*log(Npas1)))
-			#	print('tiempo en segundos ' +str(Tint1))
-				Tde1 = 20*(1+(0.1*log(Ndes+Nemb)))
-			#	print('tiempo en segundos emb/desemb' +str(Tde1))
-				tiempoT1 += Tint1 + Tde1
-			#	print ('tiempo T1' +str(tiempoT1))
-				NpasVect[estacion]=Npas1
-				NpasTotal += Npas1
-			#	print ('Npas1' +str(Npas1))
+    while 0 <= estacion < 10:
+        if estacion == 0:
+            Npas = embarques[0]
+        #    print('cantidad de embarques en la estacion 0 '+str(Npas))
+            Tint0 = 100*(1+(0.1*log(Npas)))
+        #    print('tiempo en segundos desde estacion 0 a 1' +str(Tint0))
+            Nemb = Npas
+            Ndes = 0
+            Tde0 = 20*(1+(0.1*log(Ndes+Nemb)))
+        #    print('tiempo en segundos emb en la estacion 0 ' +str(Tde0))
+            tiempoT0 = Tint0 + Tde0 
+        #    print ('tiempo T0' +str(tiempoT0))
+            NpasVect[0] = Npas
+            NpasTotal = Npas
+        #    print ('Npas' +str(Npas))
+            
+        else:
+            if 1 <= estacion <= 8:
+                Nemb = embarques[estacion]
+            #    print('cantidad de embarques en la estacion'+str(Nemb))
+                Ndes = cantidad_desembargues(NpasVect[estacion-1])
+            #    print('cantidad de desembarques en la estacion' +str(Ndes))
+                Npas1 = NpasVect[estacion-1] + Nemb - Ndes
+            #    print ('cantidad de psajeros actual' +str(Npas1))
+                Tint1 = 100*(1+(0.1*log(Npas1)))
+            #    print('tiempo en segundos ' +str(Tint1))
+                Tde1 = 20*(1+(0.1*log(Ndes+Nemb)))
+            #    print('tiempo en segundos emb/desemb' +str(Tde1))
+                tiempoT1 += Tint1 + Tde1
+            #    print ('tiempo T1' +str(tiempoT1))
+                NpasVect[estacion]=Npas1
+                NpasTotal += Npas1
+            #    print ('Npas1' +str(Npas1))
 
-			else:
-				Npas3 = NpasVect[8]
-			#	print ('el numero de pasajeros antes de la ult estacion es ' +str(Npas3))
-				Ndes3 = Npas3
-				Tde2 = 20*(1+(0.1*log(Ndes3)))
-			#	print('tiempo en segundos emb/desemb estacion final' +str(Tde2))
-				tiempoT2 = Tde2  
-			#print ('tiempo T2' +str(tiempoT2))
+            else:
+                Npas3 = NpasVect[8]
+            #    print ('el numero de pasajeros antes de la ult estacion es ' +str(Npas3))
+                Ndes3 = Npas3
+                Tde2 = 20*(1+(0.1*log(Ndes3)))
+            #    print('tiempo en segundos emb/desemb estacion final' +str(Tde2))
+                tiempoT2 = Tde2  
+            #print ('tiempo T2' +str(tiempoT2))
 
-		estacion += 1
+        estacion += 1
 
-	tiempoTotal = tiempoT0 + tiempoT1 + tiempoT2
-	promPasajeros = NpasTotal/9
-	maximoPasajeros = max(embarques)
+    tiempoTotal = tiempoT0 + tiempoT1 + tiempoT2
+    promPasajeros = NpasTotal/9
+    maximoPasajeros = max(embarques)
 
-	print "----------------------------------------------------------------"
-	print "----------------------- Resultados! ----------------------------"
-	print "----------------------------------------------------------------"
-	print "(a) El tiempo total del recorrido en segundos: %0.2f " % (tiempoTotal)
-	print "(b) El nro de pasajeros promedio a bordo del tren es: %0.2f" % (promPasajeros)  
-	print "(c) El nro maximo de pasajeros embarcados es: %d " % (maximoPasajeros)
-	print ""
+    print "----------------------------------------------------------------"
+    print "----------------------- Resultados! ----------------------------"
+    print "----------------------------------------------------------------"
+    print "(a) El tiempo total del recorrido en segundos: %0.2f " % (tiempoTotal)
+    print "(b) El nro de pasajeros promedio a bordo del tren es: %0.2f" % (promPasajeros)  
+    print "(c) El nro maximo de pasajeros embarcados es: %d " % (maximoPasajeros)
+    print ""
 
-	return [tiempoTotal, promPasajeros, maximoPasajeros]
-
+    return [tiempoTotal, promPasajeros, maximoPasajeros]
 

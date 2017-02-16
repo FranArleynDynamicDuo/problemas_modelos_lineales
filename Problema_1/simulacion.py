@@ -110,7 +110,8 @@ def iniciar_simulacion(maximo_de_tiempo, maximo_servidores):
     tiempo_total = [0]*4
     for i in range(maximo_servidores):
         tiempo_total[i] = tiempo_actual - lista_cajeros[i].tiempo_servicio_total
-        print "    Cajero %d: %0.6f" % (i, tiempo_total[i] * 100 / tiempo_actual)
+        tiempo_total[i] = tiempo_total[i] * 100 / tiempo_actual
+        print "    Cajero %d: %0.6f" % (i, tiempo_total[i])
     print "---------------------------------------------------------------- "
     print ""
     

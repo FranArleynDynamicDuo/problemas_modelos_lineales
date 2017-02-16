@@ -121,6 +121,7 @@ def iniciar_simulacion(maximo_de_tiempo):
         lista_servidores[1].tiempo_servicio_total)
     esperanza_terminacion_trabajo = reduce(lambda x, y: x + y, tiempos_finalizacion_trabajo) / len(tiempos_finalizacion_trabajo)
     
+    
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"

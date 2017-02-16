@@ -10,16 +10,44 @@ def iniciar_simulacion(maximo_dias, maximo_punto_reorden):
     # Inicalizamos las variables compartidas
     costo_minimo = 0
     reorden_optimo = 0
-
+    costos_promedios = []
     # Ciclamos por distintos puntos de reorden para conseguir un punto de
     # reorden optimo
     for punto_reorden in range(maximo_punto_reorden):
+        costo_nuevo = probar_punto_reorden(maximo_dias, punto_reorden, simulaciones = 50)
+        costo_promedio = sum(costo_nuevo)/len(costo_nuevo)
+        
+        if punto_reorden == 0:
+            reorden_optimo = 0
+            costo_minimo = costo_promedio
+        elif costo_promedio<costo_minimo:
+            reorden_optimo = punto_reorden
+            costo_minimo = costo_promedio
+
+    
+
+    print "----------------------------------------------------------------"
+    print "----------------------- Resultados! ----------------------------"
+    print "----------------------------------------------------------------"
+    print ""
+    print "Analisis de resultados: "
+    print "----------------------------------------------------------------"
+    print "(a) El punto de reorden optimo es %d unidades con costo $%d " % (reorden_optimo, costo_minimo)
+    print ""
+
+    return [reorden_optimo, costo_minimo]
+
+
+def probar_punto_reorden(maximo_dias, punto_reorden, simulaciones=1):
+    # Ciclamos por distintos puntos de reorden para conseguir un punto de
+    # reorden optimo
+    for simulacion in range(simulaciones):
         # Inicializamos las variables de la simulacion
-        dias_transcurridos = 0
         inventario_actual = Q
         costo_acumulado = 0
         dias_para_proximo_envio = 0
         envio_en_camino = False
+        costos = []
         # Iniciamos la simulacion para un nuevo punto de reorden
         for dias_transcurridos in range(maximo_dias):
             # Si habia un envio en camino pero ya llego, recibimos el envio
@@ -45,20 +73,6 @@ def iniciar_simulacion(maximo_dias, maximo_punto_reorden):
                 envio_en_camino = True
 
         # Si el punto de reorden en cuestion es el primero, no lo comparo
-        if punto_reorden == 0:
-            costo_minimo = costo_acumulado
-            reorden_optimo = punto_reorden
-        elif costo_acumulado < costo_minimo:
-            costo_minimo = costo_acumulado
-            reorden_optimo = punto_reorden
+        costos.append(costo_acumulado)
 
-    print "----------------------------------------------------------------"
-    print "----------------------- Resultados! ----------------------------"
-    print "----------------------------------------------------------------"
-    print ""
-    print "Analisis de resultados: "
-    print "----------------------------------------------------------------"
-    print "(a) El punto de reorden optimo es %d unidades con costo $%d " % (reorden_optimo, costo_minimo)
-    print ""
-
-    return [reorden_optimo, costo_minimo]
+    return costos
