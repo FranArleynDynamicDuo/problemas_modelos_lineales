@@ -10,6 +10,60 @@ Nemb = [127,162,179,75,223,186,124,45,100,171,235,176,130,159,117,100,92,68,242,
         140,280,145,208,333,250,221,318,120,72,166,194,87,94,170,65,190,359,312,205,77,197,359,174,140,167,181,143,99,
         297,92,246,211,275,224,171,290,291,220,239,126,89,66,35,26,129,234,181,180,58,40,54,123,78,319,389,121]
 
+#Con esta funcion se calcula la distribucion empirica acumulada de la muestra
+def distribucion_empirica(Demb):
+        m = len(Demb)
+        a = sl[0]
+        b = sl[m-1]
+        i = 0
+        y = []
+
+        while i < m:
+                yt = 0
+                j = 0
+                while j < m:
+                        xu = cota_superior(a,b,m,i)
+                        if sl[j] < xu:
+                                yt = yt + 1/m
+                                j = j+1
+                        else:
+                                j = j+1
+                y.append(yt)
+                i = i+1
+
+        return y
+#Aqui se utiliza un loop para obtener el valor correcto de embarcados
+def obtener_embarcados(x)
+        xs = sorted(x)
+        m = len(xs)
+        y = distribucion_empirica(xs)
+        rng = random.random()
+
+        while j < m:
+                if rng <= y[j]
+                        return calcular_distribucion(rng,y,xs,j)
+                else
+                        j = j+1
+
+#Ecuacion de la recta despejada para obtener el valor de los embarcados
+def calcular_distribucion(u,y,x,j)
+        xl = cota_inferior(x[0],x[199],200,j)
+        xu = cota_superior(x[0],x[199],200,j)
+        xf = xl + (u-y[j-1]/y[j]-y[j-1]) * (xu - xl)
+
+        return xf
+
+#La cota inferior del valor X                        
+def cota_inferior(a,b,m,i)
+        xl = a + (b-a/m) * i
+        return xl
+
+#La cota superior del valor X
+def cota_superior(a,b,m,i)
+        xu = a + (b-a/m) * (i+1)
+        return xu
+
+
 
 def cantidad_desembargues(emb):
 	desembarques = 0
