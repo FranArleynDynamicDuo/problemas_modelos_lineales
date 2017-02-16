@@ -119,16 +119,17 @@ def iniciar_simulacion(maximo_de_tiempo):
     p_desocupado_b = (
         tiempo_actual -
         lista_servidores[1].tiempo_servicio_total)
+    esperanza_terminacion_trabajo = reduce(lambda x, y: x + y, tiempos_finalizacion_trabajo) / len(tiempos_finalizacion_trabajo)
     
     print "----------------------------------------------------------------"
     print "Analisis de resultados: "
     print "----------------------------------------------------------------"
     print "(a) El número esperado de trabajos en el taller en cualquier momento: %0.2f" % (numeros_de_trabajos)
     print "(c) El porcentaje de tiempo que se para el centro A por falta de espacio en la cola del centro B %0.2f" % (tiempo_interrupcion_A)
-    print "(c) El tiempo esperado de terminación de un trabajo: %0.2f" % (reduce(lambda x, y: x + y, tiempos_finalizacion_trabajo) / len(tiempos_finalizacion_trabajo))
+    print "(c) El tiempo esperado de terminación de un trabajo: %0.2f" % (esperanza_terminacion_trabajo)
     print "(d) El porcentaje de tiempo desocupado de cada terminal"
     print "    Terminal A: %0.6f" % (p_desocupado_a)
     print "    Terminal B: %0.6f" % (p_desocupado_b)
     print "---------------------------------------------------------------- "
 
-    return [p_desocupado_a, p_desocupado_b]
+    return [numeros_de_trabajos, tiempo_interrupcion_A, esperanza_terminacion_trabajo, p_desocupado_a, p_desocupado_b]
